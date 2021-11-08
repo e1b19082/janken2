@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>Janken-Lec02</title>
+</head>
+
+<body>
+  <a href="/logout">ログアウト</a>
+
+  <h1>Lec02 GET!</h1>
+
+  Hi <span sec:authentication="name"></span>
+
+  <h2>エントリー</h2>
+
+  <p th:if="${users}">
+  <ul>
+    <!--eachは所謂for each．この場合roomオブジェクトのusersフィールドにあるすべてのデータを一通り表示する
+            thが指定されているので[]が不要になる-->
+    <li th:each="user : ${users}">
+      <a th:href="@{/match(id=${user.id})}"> [[${user.name}]]
+      </a>
+    </li>
+  </ul>
+  </p>
+
+  <h2>アクティブな試合</h2>
+
+  <p th:if="${activeGame}">
+  <div th:each="activeGame:${activeGame}">
+    <tr>
+      <td>id:[[${activeGame.id}]]</td>
+      <td>user1:[[${activeGame.user1}]]</td>
+      <td>user2:[[${activeGame.user2}]]</td>
+      <td>isActive:[[${activeGame.isActive}]]</td>
+    </tr>
+  </div>
+  </p>
+
+  <h2>試合結果</h2>
+
+  <p th:if="${matches}">
+  <div th:each="matches:${matches}">
+    <tr>
+      <td>id:[[${matches.id}]]</td>
+      <td>user1:[[${matches.user1}]]</td>
+      <td>user2:[[${matches.user2}]]</td>
+      <td>user1の手:[[${matches.user1Hand}]]</td>
+      <td>user2の手:[[${matches.user2Hand}]]</td>
+    </tr>
+  </div>
+  </p>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>match</title>
+</head>
+
+<body>
+  <script th:inline="javascript" th:if=${result}>
+    window.onload = function () {
+      let result = [[${ result }]];
+      let kekka = "あなたの手 " + result.playerHand + "<br>相手の手 " + result.cpuHand + "<br>結果 " + result.result;
+      document.getElementById("jankenResult").innerHTML = kekka;
+    }
+  </script>
+
+  <a href="/logout">ログアウト</a>
+
+  <h1>Match</h1>
+
+  <p th:if="${user1} and ${user2}">
+  <div>
+    <h2>[[${user1.name}]] V.S. [[${user2.name}]]</h2>
+  </div>
+  </p>
+
+  <div th:if="${id}">
+    <a th:href="@{/matchjanken(id=${id},hand=Gu)}">ぐー</a>
+    <a th:href="@{/matchjanken(id=${id},hand=Choki)}">ちょき</a>
+    <a th:href="@{/matchjanken(id=${id},hand=Pa)}">ぱー</a>
+  </div>
+
+  <div th:if="${result}">
+    <span id="jankenResult"></span>
+  </div>
+  <a href="/lec02">もどる</a>
+
+</body>
+
+</html>

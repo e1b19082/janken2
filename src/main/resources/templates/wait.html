@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>wait</title>
+  <script>
+    window.onload = function () {
+      let sse = new EventSource('/step1');
+      sse.onmessage = function (event) {
+        let dbody = document.getElementById("matchGame");
+        let matchGame = JSON.parse(event.data);
+        let result = "<h3>結果</h3>" + "<tr>" + "<td>Match: </td>" + "<td> id: " + matchGame.id + "</td>" + "<td> user1: " + matchGame.user1 + "</td>" + "<td> user2: " + matchGame.user2 + "</td>" + "<td> user1Hand: " + matchGame.user1Hand + "</td>" + "<td> user2Hand: " + matchGame.user2Hand + "</td>" + "</tr><br>" + "<a href='/lec02'>もどる</a>";
+        dbody.innerHTML = result;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <h2>相手の手を待っています</h2>
+
+  Hi <span sec:authentication="name"></span>
+
+  <div id="matchGame">
+    <span th:if="${match}">
+      <h3>結果</h3>
+      <tr>
+        <td>Match: </td>
+        <td>id: [[${match.id}]]</td>
+        <td>user1: [[${match.user1}]]</td>
+        <td>user2: [[${match.user2}]]</td>
+        <td>user1Hand: [[${match.user1Hand}]]</td>
+        <td>user2Hand: [[${match.user2Hand}]]</td>
+      </tr>
+      <br>
+      <a href="/lec02">もどる</a>
+    </span>
+  </div>
+
+</body>
+
+</html>
